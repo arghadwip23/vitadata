@@ -31,7 +31,7 @@ function DesktopDropdown({ label, items, active }) {
 				{items.map((item) => (
 					<Link
 						key={item}
-						href="#"
+						href={`./${item}`}
 						className="block rounded-xl px-3 py-2 text-sm font-medium text-[#4a2b1f] hover:bg-[#f8f0ea]"
 					>
 						{item}
@@ -62,7 +62,7 @@ function MobileSection({ title, items }) {
 					{items.map((item) => (
 						<Link
 							key={item}
-							href="#"
+							href={`\${item}`}
 							className="block rounded-lg px-3 py-2 text-sm font-medium text-[#4a2b1f] hover:bg-[#f8f0ea]"
 						>
 							{item}
@@ -96,7 +96,7 @@ export default function Navbar() {
 				{/* Desktop Nav Links */}
 				<div className="hidden items-center gap-8 lg:flex">
 					<Link
-						href="#"
+						href="./"
 						className="text-[15px] font-semibold text-[#b56a3f] transition-colors hover:text-[#8f4f2f]"
 					>
 						Home
@@ -104,13 +104,13 @@ export default function Navbar() {
 					<DesktopDropdown label="Solutions" items={solutions} />
 					<DesktopDropdown label="Technologies" items={technologies} active />
 					<Link
-						href="#"
+						href="./about"
 						className="text-[15px] font-semibold text-[#2b1914] transition-colors hover:text-[#b56a3f]"
 					>
 						About Us
 					</Link>
 					<Link
-						href="#"
+						href="ContctUs"
 						className="text-[15px] font-semibold text-[#2b1914] transition-colors hover:text-[#b56a3f]"
 					>
 						Contact Us
