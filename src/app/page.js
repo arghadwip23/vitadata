@@ -5,7 +5,8 @@ import { useEffect, useRef } from "react";
 import HeroCopy from "./Components/Hero";
 import VitadataSolutionsSection from "./Components/VitadataSolutions";
 import TechnologiesSection from "./Components/HomeSection3";
-
+import VitaDataAbout from "./Components/About";
+import ContactFormCard from "./Components/Contactform";
 export default function HeroSection() {
   const contentRef = useRef(null);
 
@@ -56,6 +57,15 @@ export default function HeroSection() {
       </section>
       <VitadataSolutionsSection />
       <TechnologiesSection />
+      <VitaDataAbout />
+      <section className="grid md:grid-cols-2 my-20">
+         <div className="flex">
+             <img src="https://images.unsplash.com/photo-1740560051533-3acef26ace95?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Y29udGFjdCUyMHVzfGVufDB8fDB8fHww" className="m-auto rounded rounded-2xl" alt="" />
+         </div>
+         <div>
+          <ContactFormCard />
+         </div>
+      </section>
     </>
   );
 }
