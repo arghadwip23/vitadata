@@ -1,8 +1,10 @@
+
 import { Geist_Mono, Roboto } from "next/font/google";
 import "./globals.css";
+import "aos/dist/aos.css";
 import Navbar from "./Components/Navbar";
 import PageFooter from "./Components/Footer";
-
+import AOSProvider from "./Components/AOSProvider";
 const roboto = Roboto({
   variable: "--font-sans",
   subsets: ["latin"],
@@ -25,10 +27,12 @@ export default function RootLayout({ children }) {
       className={`${roboto.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans bg-white">
-        <Navbar />
-        {children}
-        <PageFooter/>
-        </body>
+        <AOSProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <PageFooter />
+        </AOSProvider>
+      </body>
     </html>
   );
 }

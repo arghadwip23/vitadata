@@ -29,7 +29,7 @@ export default function HeroSection() {
   return (
     <>
       
-      <section className=" bg-card p-4 pt-20 md:px-10 lg:px-10 md:p-8 md:bg-white ">
+      <section className=" bg-card p-4 pt-20 md:px-10 lg:px-10 md:p-8 md:bg-white " data-aos="fade-up">
         <section className="   h-[70vh] grid grid-cols-1 lg:grid-cols-2 md:bg-[#DDC8BE] lg:rounded-2xl">
         
 

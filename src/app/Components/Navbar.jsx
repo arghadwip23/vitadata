@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import {
 	ChevronDown,
 	CircleUserRound,
@@ -10,8 +11,13 @@ import {
 	ArrowRightCircle,
 } from "lucide-react";
 
-const solutions = ["Admin Team", "Laboratory", "Patient", "Doctor"];
-const technologies = ["Mobile App", "Cloud Storage", "Web App", "AI/ML"];
+const solutions = [{ label: "Solutions Overview", href: "/solutions" }];
+const technologies = [
+	{ label: "Mobile App", href: "/Tech" },
+	{ label: "Cloud Storage", href: "/Tech/cloud" },
+	{ label: "Web App", href: "/Tech/web" },
+	{ label: "AI/ML", href: "/Tech/aiml" },
+];
 
 function DesktopDropdown({ label, items, active }) {
 	return (
@@ -30,11 +36,11 @@ function DesktopDropdown({ label, items, active }) {
 			<div className="invisible absolute left-0 top-full z-40 mt-3 w-52 rounded-2xl border border-[#ead9ce] bg-white p-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
 				{items.map((item) => (
 					<Link
-						key={item}
-						href={`./${item}`}
+						key={item.href}
+						href={item.href}
 						className="block rounded-xl px-3 py-2 text-sm font-medium text-[#4a2b1f] hover:bg-[#f8f0ea]"
 					>
-						{item}
+						{item.label}
 					</Link>
 				))}
 			</div>
@@ -42,7 +48,7 @@ function DesktopDropdown({ label, items, active }) {
 	);
 }
 
-function MobileSection({ title, items }) {
+function MobileSection({ title, items, onNavigate }) {
 	const [open, setOpen] = useState(false);
 
 	return (
@@ -61,11 +67,12 @@ function MobileSection({ title, items }) {
 				<div className="space-y-1 px-2 pb-3">
 					{items.map((item) => (
 						<Link
-							key={item}
-							href={`\${item}`}
+							key={item.href}
+							href={item.href}
+							onClick={onNavigate}
 							className="block rounded-lg px-3 py-2 text-sm font-medium text-[#4a2b1f] hover:bg-[#f8f0ea]"
 						>
-							{item}
+							{item.label}
 						</Link>
 					))}
 				</div>
@@ -76,12 +83,17 @@ function MobileSection({ title, items }) {
 
 export default function Navbar() {
 	const [menuOpen, setMenuOpen] = useState(false);
+	const pathname = usePathname();
+	const isHome = pathname === "/";
+	const isSolutions = pathname.startsWith("/solutions");
+	const isTech = pathname === "/Tech" || pathname.startsWith("/Tech/");
+	const isContact = pathname.startsWith("/contactUs");
 
 	return (
 		<header className="sticky top-0 z-50 w-full border-b border-[#e8d7cc] bg-white/95 backdrop-blur">
 			<nav className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 				{/* Logo */}
-				<Link href="#" className="flex items-center gap-2.5">
+				<Link href="/" className="flex items-center gap-2.5">
 					<img src="/logo.svg" alt="VitaData Solutions logo" className="h-10 w-auto" />
 					<div className="flex flex-col leading-tight">
 						<span className="text-[15px] font-bold tracking-widest text-[#7a3e23] uppercase">
@@ -96,22 +108,26 @@ export default function Navbar() {
 				{/* Desktop Nav Links */}
 				<div className="hidden items-center gap-8 lg:flex">
 					<Link
-						href="./"
-						className="text-[15px] font-semibold text-[#b56a3f] transition-colors hover:text-[#8f4f2f]"
+						href="/"
+						className={`text-[15px] font-semibold transition-colors hover:text-[#8f4f2f] ${
+							isHome ? "text-[#b56a3f]" : "text-[#2b1914]"
+						}`}
 					>
 						Home
 					</Link>
-					<DesktopDropdown label="Solutions" items={solutions} />
-					<DesktopDropdown label="Technologies" items={technologies} active />
+					<DesktopDropdown label="Solutions" items={solutions} active={isSolutions} />
+					<DesktopDropdown label="Technologies" items={technologies} active={isTech} />
 					<Link
-						href="./about"
+						href="/#about"
 						className="text-[15px] font-semibold text-[#2b1914] transition-colors hover:text-[#b56a3f]"
 					>
 						About Us
 					</Link>
 					<Link
-						href="ContctUs"
-						className="text-[15px] font-semibold text-[#2b1914] transition-colors hover:text-[#b56a3f]"
+						href="/contactUs"
+						className={`text-[15px] font-semibold transition-colors hover:text-[#b56a3f] ${
+							isContact ? "text-[#b56a3f]" : "text-[#2b1914]"
+						}`}
 					>
 						Contact Us
 					</Link>
@@ -151,21 +167,32 @@ export default function Navbar() {
 				<div className="border-t border-[#f0ded2] bg-[#fffaf6] px-4 py-4 lg:hidden">
 					<div className="mx-auto flex w-full max-w-7xl flex-col gap-3">
 						<Link
-							href="#"
+							href="/"
+							onClick={() => setMenuOpen(false)}
 							className="rounded-xl border border-[#ead9ce] bg-white px-4 py-3 text-base font-semibold text-[#b56a3f]"
 						>
 							Home
 						</Link>
-						<MobileSection title="Solutions" items={solutions} />
-						<MobileSection title="Technologies" items={technologies} />
+						<MobileSection
+							title="Solutions"
+							items={solutions}
+							onNavigate={() => setMenuOpen(false)}
+						/>
+						<MobileSection
+							title="Technologies"
+							items={technologies}
+							onNavigate={() => setMenuOpen(false)}
+						/>
 						<Link
-							href="#"
+							href="/#about"
+							onClick={() => setMenuOpen(false)}
 							className="rounded-xl border border-[#ead9ce] bg-white px-4 py-3 text-base font-semibold text-[#2b1914]"
 						>
 							About Us
 						</Link>
 						<Link
-							href="#"
+							href="/contactUs"
+							onClick={() => setMenuOpen(false)}
 							className="rounded-xl border border-[#ead9ce] bg-white px-4 py-3 text-base font-semibold text-[#2b1914]"
 						>
 							Contact Us

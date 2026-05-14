@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function VitaDataAbout() {
   return (
-    <section className="w-[90vw] mx-auto font-sans ">
+    <section id="about" className="w-[90vw] mx-auto font-sans ">
       <div
         className="relative flex flex-col md:flex-row items-stretch rounded-2xl overflow-hidden shadow-xl"
         style={{ background: "#5C3D2E" }}
